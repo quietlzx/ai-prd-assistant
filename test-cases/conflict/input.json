@@ -1,0 +1,5 @@
+{
+  "case_id": "conflict",
+  "expected_gate": "BLOCKED",
+  "request": "Allow every employee to query all uploaded documents, but also guarantee that no employee can see a document they were not explicitly authorized to access."
+}

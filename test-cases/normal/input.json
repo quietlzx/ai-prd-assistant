@@ -1,0 +1,5 @@
+{
+  "case_id": "normal",
+  "expected_gate": "READY",
+  "request": "Create a PRD for an internal team AI knowledge-base Q&A tool that only answers from uploaded documents, cites every answer, and blocks sensitive content."
+}
