@@ -1,5 +1,5 @@
 {
   "case_id": "missing-info",
   "expected_gate": "DRAFT_WITH_GAPS",
-  "request": "Build an AI assistant for internal documents. We have not decided permissions, supported file types, response targets, or the reviewer."
+  "request": "建设一个内部文档 AI 助手，但尚未确定权限、支持文件类型、响应指标和复核人。"
 }

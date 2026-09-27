@@ -1,118 +1,110 @@
-# PRD Template
+# PRD 模板
 
-## Document Header
+## 文档头部
 
-- Product name
-- Product version
-- PRD version
-- Run ID
-- Framework version
-- Pipeline status
-- Review state
-- Timestamp
-- Input summary
+- 产品名称
+- 产品版本
+- PRD 版本
+- 运行 ID
+- 框架版本
+- 流水线状态
+- 审核状态
+- 时间戳
+- 输入摘要
 
-## Required Sections
+## 必需章节
 
-### 1. Product Overview
+### 1. 产品概述
 
-Describe the product, target outcome, and hard boundaries. Do not use
-unverified claims.
+描述产品定位、目标结果和强制边界。不得写入未经证实的信息。
 
-### 2. Product Goals
+### 2. 产品目标
 
-State measurable outcomes and explicit non-goals.
+写明可量化目标和非目标。
 
-### 3. Users and Scenarios
+### 3. 用户与场景
 
-Use concrete users and workflows. Mark inferred personas with `[推断]`.
+使用具体用户和具体工作流。推断出的用户或场景必须标记 `[推断]`。
 
-### 4. Scope
+### 4. 范围边界
 
-Separate in-scope and out-of-scope behavior.
+分别列出范围内和范围外行为。
 
-### 5. Functional Capabilities
+### 5. 功能能力
 
-For every capability, include all of these fields:
+每个能力必须包含：
 
-- User goal
-- Input
-- Processing rules
-- Output
-- Failure states
-- Boundary conditions
-- Acceptance criteria
+- 用户目标
+- 输入
+- 处理规则
+- 输出
+- 失败状态
+- 边界条件
+- 验收标准
 
-For AI products, explicitly cover grounding, citation, permission filtering,
-refusal, human review, failure-closed behavior, and data lifecycle events.
+AI 产品必须显式覆盖事实依据、引用、权限过滤、拒答、人工审核、失败关闭和数据生命周期事件。
 
-### 6. Non-Functional Requirements
+### 6. 非功能需求
 
-Define performance, security, privacy, availability, observability,
-auditability, permissions, rollback, and data retention.
+定义性能、安全、隐私、可用性、可观测性、可审计性、权限、回滚和数据保留要求。
 
-### 7. Quantitative Quality Targets
+### 7. 量化质量目标
 
-Use unambiguous denominators, sampling rules, and evaluation sources. Do not
-write goals such as "high accuracy" without a number and measurement method.
+明确统计分母、抽样规则和评测来源。禁止只写“准确率高”等无法验收的描述。
 
-### 8. Lifecycle Behavior
+### 8. 生命周期行为
 
-Describe update, delete, offline, revocation, index invalidation, cache
-invalidation, and historical-reference behavior.
+描述更新、删除、下线、撤权、索引失效、缓存失效和历史引用行为。
 
-### 9. Acceptance Scenarios
+### 9. 验收场景
 
-Cover success, refusal, blocked, review, permission changes, deletion,
-outdated documents, model failures, and rollback.
+覆盖成功、拒答、阻断、人工审核、权限变化、删除、过期文档、模型故障和回滚。
 
-### 10. AI Risks
+### 10. AI 风险
 
-Use the fixed risk fields from the risk taxonomy.
+使用风险分类文档中的固定字段。
 
-### 11. Human Review Gate
+### 11. 人工审核门禁
 
-Record `pipeline_status`, `review_state`, review inputs, decisions, and the
-conditions required for report assembly.
+记录 `pipeline_status`、`review_state`、审核输入、审核决策和进入报告组装的条件。
 
-### 12. Report Assembly
+### 12. 报告组装
 
-Require Markdown and a self-contained HTML artifact built from the approved
-revision.
+要求从已批准版本生成 Markdown 和单文件 HTML 产物。
 
-### Appendix A: Pending Decisions
+### 附录 A：待确认事项清单
 
-Use one entry per unresolved item:
+每个未决事项使用以下格式：
 
 ```text
 Gxx
-Current default:
-Decision owner:
-Gate impact:
+当前默认：
+决策人：
+Gate 影响：
 
-| Option | Business impact | Development impact |
+| 方案 | 业务影响 | 开发影响 |
 |---|---|---|
 | A | ... | ... |
 | B | ... | ... |
 
-Recommendation:
-Status: [待确认:Gxx]
+推荐方案：
+状态：[待确认:Gxx]
 ```
 
-Do not leave unnumbered `[待确认]` markers in the main document.
+主文档中不得保留未编号的 `[待确认]` 标记。
 
-## Capability Pattern
+## 能力写法
 
-Use this compact pattern when a table would be hard to read:
+当表格难以阅读时，使用以下结构：
 
 ```markdown
-#### F1 Capability name
+#### F1 能力名称
 
-- User goal:
-- Input:
-- Processing rules:
-- Output:
-- Failure states:
-- Boundary conditions:
-- Acceptance criteria:
+- 用户目标：
+- 输入：
+- 处理规则：
+- 输出：
+- 失败状态：
+- 边界条件：
+- 验收标准：
 ```

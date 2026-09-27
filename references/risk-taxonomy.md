@@ -1,68 +1,52 @@
-# AI Product Risk Taxonomy
+# AI 产品风险分类
 
-Every risk uses the same fields:
+每条风险统一使用以下字段：
 
 `风险编号｜类别｜触发条件｜影响｜当前控制｜降级方案｜验证方法｜状态`
 
-## 1. Facts, Hallucination, and Incorrect Citations
+## 1. 事实幻觉与错误引用
 
-Cover unsupported claims, fabricated sources, wrong source mapping, stale
-facts, internal contradictions, and citation content that does not support the
-claim.
+覆盖无依据陈述、伪造来源、引用映射错误、过期事实、内部矛盾和引用内容不支持结论等问题。
 
-Required controls usually include grounding-only generation, mandatory
-citations, no-evidence refusal, citation validation, and explicit separation
-between facts and inference.
+常见控制包括只基于证据生成、强制引用、无依据拒答、引用校验，以及明确区分事实与推断。
 
-## 2. Model Capability Boundaries
+## 2. 模型能力边界
 
-Cover long context, complex tables, ambiguous questions, domain terminology,
-multilingual content, weak OCR, conflicting documents, and tasks that require
-authoritative human judgment.
+覆盖长上下文、复杂表格、模糊问题、行业术语、多语言、OCR 质量不足、文档冲突，以及必须依赖权威人工判断的任务。
 
-Define both model-level fallback and product-level human escalation.
+必须同时定义模型级降级和产品级人工升级路径。
 
-## 3. Input Ambiguity and Data Quality
+## 3. 输入歧义与数据质量
 
-Cover missing metadata, malformed files, OCR errors, outdated versions,
-duplicate documents, permission gaps, sensitive content, and contradictory
-sources.
+覆盖元数据缺失、文件损坏、OCR 错误、版本过期、重复文档、权限缺口、敏感内容和来源冲突。
 
-Define validation, quarantine, versioning, and fail-closed behavior.
+必须定义校验、隔离、版本管理和失败关闭行为。
 
-## 4. Error Propagation and Automation Runaway
+## 4. 错误传播与自动化失控
 
-Cover persistent bad indexes, stale caches, prompt or model regressions,
-automated actions, retries, downstream consumers, and duplicated errors.
+覆盖错误索引持续使用、缓存过期、提示词或模型回归、自动操作、重试、下游消费和错误扩散。
 
-Define version pinning, rollback, circuit breakers, idempotency, and stopping
-conditions.
+必须定义版本锁定、回滚、熔断、幂等和停止条件。
 
-## 5. Human Confirmation and Responsibility Boundaries
+## 5. 人机确认与责任边界
 
-Cover users treating model output as formal policy or approval, unclear
-accountability, missing escalation, over-trust, and unreviewed high-impact
-answers.
+覆盖用户把模型输出误当成正式制度或审批、责任不清、升级路径缺失、过度信任和未审核的高影响答案。
 
-Define disclaimer behavior, review responsibility, escalation paths, and
-audit records.
+必须定义免责提示、审核责任、升级路径和审计记录。
 
-## 6. Evaluation, Monitoring, and Rollback
+## 6. 评测、监控与回滚
 
-Cover missing golden datasets, weak online metrics, no regression gate,
-unmonitored refusal or citation quality, lack of version rollback, and no
-incident replay.
+覆盖缺少黄金数据集、线上指标不足、没有回归门槛、未监控拒答或引用质量、无法版本回滚和无法复现事故。
 
-Define offline evaluation, online monitoring, canary release, rollback
-criteria, and ownership.
+必须定义离线评测、线上监控、灰度发布、回滚标准和责任人。
 
-## Status Values
+## 状态值
 
-Use a small local set such as:
+风险状态可以使用：
 
 - `OPEN`
 - `MITIGATING`
 - `CONTROLLED`
 - `ACCEPTED`
 
-Do not confuse risk status with pipeline status.
+不得把风险状态与流水线状态混为一谈。

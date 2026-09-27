@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Structure-only harness for the AI PRD Assistant workflow."""
+"""AI PRD Assistant 工作流的纯结构校验工具。"""
 
 from __future__ import annotations
 
@@ -10,7 +10,6 @@ import sys
 import tempfile
 from pathlib import Path
 from typing import Any
-
 
 PIPELINE_STATUSES = {
     "RUNNING",
@@ -51,52 +50,52 @@ REPORT_FILES = ("05_report.md", "05_report.html")
 
 
 class HarnessFailure(Exception):
-    """Raised when a structural contract fails."""
+    """结构契约校验失败时抛出。"""
 
 
 def load_json(path: Path) -> dict[str, Any]:
     try:
         value = json.loads(path.read_text(encoding="utf-8"))
     except FileNotFoundError as exc:
-        raise HarnessFailure(f"missing file: {path.name}") from exc
+        raise HarnessFailure(f"缺少文件：{path.name}") from exc
     except json.JSONDecodeError as exc:
-        raise HarnessFailure(f"invalid JSON in {path.name}: {exc}") from exc
+        raise HarnessFailure(f"{path.name} 不是有效 JSON：{exc}") from exc
 
     if not isinstance(value, dict):
-        raise HarnessFailure(f"{path.name} must contain a JSON object")
+        raise HarnessFailure(f"{path.name} 必须包含 JSON 对象")
     return value
 
 
 def require_fields(value: dict[str, Any], fields: set[str], label: str) -> None:
     missing = sorted(field for field in fields if field not in value)
     if missing:
-        raise HarnessFailure(f"{label} missing fields: {', '.join(missing)}")
+        raise HarnessFailure(f"{label} 缺少字段：{', '.join(missing)}")
 
     null_fields = sorted(
         field for field in fields if value.get(field) is None
     )
     if null_fields:
         raise HarnessFailure(
-            f"{label} contains null fields: {', '.join(null_fields)}"
+            f"{label} 包含 null 字段：{', '.join(null_fields)}"
         )
 
 
 def require_known(value: Any, allowed: set[str], label: str) -> None:
     if value not in allowed:
         choices = ", ".join(sorted(allowed))
-        raise HarnessFailure(f"{label} must be one of: {choices}")
+        raise HarnessFailure(f"{label} 必须是以下值之一：{choices}")
 
 
 def require_nonempty_list(value: Any, label: str) -> None:
     if not isinstance(value, list) or not value:
-        raise HarnessFailure(f"{label} must be a non-empty list")
+        raise HarnessFailure(f"{label} 必须是非空列表")
 
 
 def check_pending_markers(markdown: str) -> None:
     if re.search(r"\[待确认\](?!:)", markdown):
         raise HarnessFailure(
-            "unnumbered [待确认] marker found; use [待确认:Gxx] and "
-            "centralize the item in Appendix A"
+            "发现未编号的 [待确认] 标记；请改用 [待确认:Gxx]，"
+            "并将事项集中到附录 A"
         )
 
 
@@ -110,23 +109,22 @@ def check_single_file_html(html: str) -> None:
     for pattern in external_patterns:
         if re.search(pattern, html, flags=re.IGNORECASE):
             raise HarnessFailure(
-                "single-file HTML contains an external script, stylesheet, "
-                "font, or network URL"
+                "单文件 HTML 中包含外部脚本、样式、字体或网络地址"
             )
 
 
 def check_report_text(markdown: str) -> None:
     if DISCLAIMER not in markdown:
-        raise HarnessFailure("Markdown report is missing the required disclaimer")
+        raise HarnessFailure("Markdown 报告缺少强制免责提示")
     check_pending_markers(markdown)
 
     if "附录 A：待确认事项清单" not in markdown:
-        raise HarnessFailure("Markdown report is missing Appendix A")
+        raise HarnessFailure("Markdown 报告缺少附录 A")
 
 
 def validate_run(run_dir: Path) -> dict[str, Any]:
     if not run_dir.is_dir():
-        raise HarnessFailure(f"run directory does not exist: {run_dir}")
+        raise HarnessFailure(f"运行目录不存在：{run_dir}")
 
     run = load_json(run_dir / "run.json")
     require_fields(run, REQUIRED_RUN_FIELDS, "run.json")
@@ -162,7 +160,7 @@ def validate_run(run_dir: Path) -> dict[str, Any]:
         ):
             if (run_dir / downstream).exists():
                 raise HarnessFailure(
-                    f"BLOCKED run must not create downstream artifact: "
+                    f"BLOCKED 运行不得创建下游产物："
                     f"{downstream}"
                 )
         return {"status": "BLOCKED", "run_id": run["run_id"]}
@@ -174,15 +172,15 @@ def validate_run(run_dir: Path) -> dict[str, Any]:
     ]
     if missing:
         raise HarnessFailure(
-            f"required Stage 3-4 artifacts missing: {', '.join(missing)}"
+            f"缺少第 3 至第 4 阶段必需产物：{', '.join(missing)}"
         )
 
     prd = (run_dir / "03_prd.md").read_text(encoding="utf-8")
     risks = (run_dir / "04_ai_risks.md").read_text(encoding="utf-8")
     if "验收标准" not in prd:
-        raise HarnessFailure("PRD is missing acceptance criteria")
+        raise HarnessFailure("PRD 缺少验收标准")
     if "风险编号" not in risks or "验证方法" not in risks:
-        raise HarnessFailure("AI risk artifact is missing fixed risk fields")
+        raise HarnessFailure("AI 风险产物缺少固定风险字段")
 
     review = load_json(run_dir / "04_human_review.json")
     require_fields(
@@ -193,7 +191,7 @@ def validate_run(run_dir: Path) -> dict[str, Any]:
     require_known(review["review_state"], REVIEW_STATES, "review state")
     if review["review_state"] != run["review_state"]:
         raise HarnessFailure(
-            "run.json review_state and 04_human_review.json disagree"
+            "run.json 与 04_human_review.json 中的 review_state 不一致"
         )
 
     if run["review_state"] == "approved":
@@ -202,7 +200,7 @@ def validate_run(run_dir: Path) -> dict[str, Any]:
         ]
         if missing_reports:
             raise HarnessFailure(
-                f"approved run missing report artifacts: "
+                f"已批准的运行缺少报告产物："
                 f"{', '.join(missing_reports)}"
             )
         markdown = (run_dir / "05_report.md").read_text(encoding="utf-8")
@@ -210,14 +208,14 @@ def validate_run(run_dir: Path) -> dict[str, Any]:
         check_report_text(markdown)
         check_single_file_html(html)
         if DISCLAIMER not in html:
-            raise HarnessFailure("HTML report is missing the required disclaimer")
+            raise HarnessFailure("HTML 报告缺少强制免责提示")
     else:
         premature = [
             name for name in REPORT_FILES if (run_dir / name).exists()
         ]
         if premature:
             raise HarnessFailure(
-                "reports must not exist before review approval: "
+                "人工审核批准前不得生成报告："
                 f"{', '.join(premature)}"
             )
 
@@ -247,7 +245,7 @@ def self_test() -> None:
                 "pipeline_status": "DRAFT_WITH_GAPS",
                 "review_state": "pending",
                 "timestamp": "2026-09-27",
-                "input_summary": "self test",
+                "input_summary": "自测",
             },
         )
         write_json(
@@ -266,7 +264,7 @@ def self_test() -> None:
             run_dir / "02_validation.json",
             {
                 "status": "DRAFT_WITH_GAPS",
-                "reason": "pending decisions",
+                "reason": "存在未决事项",
                 "gaps": [],
                 "clarification_questions": [],
             },
@@ -298,7 +296,7 @@ def self_test() -> None:
             run_dir / "04_human_review.json",
             {
                 "review_state": "approved",
-                "reviewer": "self-test",
+                "reviewer": "自测",
                 "reviewed_at": "2026-09-27",
                 "change_requests": [],
             },
@@ -315,7 +313,7 @@ def self_test() -> None:
         )
         validate_run(run_dir)
 
-    print("self-test passed")
+    print("自测通过")
 
 
 def main() -> int:

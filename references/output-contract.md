@@ -1,42 +1,42 @@
-# Output Contract
+# 输出契约
 
 ## Markdown
 
-Produce one complete Markdown document that includes:
+生成一个完整 Markdown 文档，包含：
 
-- run metadata
-- revision history
-- Brief and validation summaries
-- full PRD
-- quantitative targets
-- AI risk list
-- human review record
-- centralized pending-decision appendix
-- required disclaimers
+- 运行元数据
+- 修订记录
+- Brief 与需求校验摘要
+- 完整 PRD
+- 量化质量目标
+- AI 风险清单
+- 人工审核记录
+- 集中管理的待确认事项附录
+- 强制免责提示
 
 ## HTML
 
-Produce one self-contained HTML file:
+生成一个单文件 HTML：
 
-- inline CSS
-- no external scripts, styles, fonts, or network resources
-- escaped user and document content
-- stable heading anchors and numbering
-- printable layout
-- responsive layout for mobile and desktop
-- complete risk table and pending-decision appendix
-- no hidden or removable disclaimer
+- 内嵌 CSS
+- 不依赖外部脚本、样式、字体或网络资源
+- 对用户输入和文档内容进行转义
+- 保持稳定标题锚点和编号
+- 支持打印
+- 适配移动端和桌面端
+- 完整展示风险表和待确认事项附录
+- 免责提示不可隐藏、不可删除
 
-## Consistency Checks
+## 一致性校验
 
-The Markdown and HTML outputs must agree on:
+Markdown 与 HTML 必须在以下内容上保持一致：
 
 - `run_id`
-- product and PRD versions
-- Gate status
+- 产品和 PRD 版本
+- Gate 状态
 - `review_state`
-- risk IDs
-- pending-decision IDs
-- disclaimer text
+- 风险编号
+- 待确认事项编号
+- 免责提示文案
 
-Report assembly must stop if these values differ.
+如果这些值不一致，报告组装必须停止。

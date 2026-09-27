@@ -1,10 +1,10 @@
-# Contributing
+# 贡献指南
 
-## Before Opening a Pull Request
+## 提交 Pull Request 前
 
-1. Describe the problem and the smallest behavior change that solves it.
-2. Add or update tests.
-3. Run:
+1. 描述问题和解决问题所需的最小行为变更。
+2. 新增或更新测试。
+3. 运行：
 
 ```bash
 pytest
@@ -16,19 +16,18 @@ python scripts/harness.py self-test
 5. Confirm that no private documents, credentials, endpoints, or run logs are
    included.
 
-## Rule Changes
+## 规则变更
 
-The following changes are breaking changes:
+以下变更属于破坏性变更：
 
-- adding or removing a pipeline status
-- changing Gate behavior
-- changing `review_state` transitions
-- changing the required stage order
-- changing the report artifact contract
+- 新增或删除流水线主状态
+- 修改 Gate 行为
+- 修改 `review_state` 流转
+- 修改必需阶段顺序
+- 修改报告产物契约
 
-Breaking changes require migration notes.
+破坏性变更必须提供迁移说明。
 
-## Data Policy
+## 数据规则
 
-Use synthetic examples only. Do not submit company documents, customer data,
-personal information, API keys, private URLs, or model credentials.
+只使用合成示例。禁止提交公司文档、客户数据、个人信息、API Key、私有地址或模型凭据。

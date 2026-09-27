@@ -1,5 +1,5 @@
 {
   "case_id": "normal",
   "expected_gate": "READY",
-  "request": "Create a PRD for an internal team AI knowledge-base Q&A tool that only answers from uploaded documents, cites every answer, and blocks sensitive content."
+  "request": "为团队内部 AI 知识库问答工具生成 PRD，只允许基于上传文档回答，所有答案必须引用，并拦截敏感内容。"
 }

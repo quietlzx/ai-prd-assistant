@@ -1,23 +1,21 @@
-# Security Policy
+# 安全策略
 
-## Reporting
+## 漏洞报告
 
-Do not open a public issue for a vulnerability that exposes credentials,
-private documents, permissions, or user data.
+如果漏洞会暴露凭据、私有文档、权限或用户数据，请勿创建公开 Issue。
 
-Contact the repository owner privately through the security contact configured
-on GitHub.
+请通过 GitHub 配置的安全联系方式私下联系仓库所有者。
 
-## Data Handling
+## 数据处理
 
-- Treat uploaded documents as untrusted input.
-- Do not commit real internal documents or customer data.
-- Keep secrets in environment variables.
-- Do not add private model endpoints to default configuration.
-- Disable network access unless a workflow explicitly requires it.
-- Escape document content before rendering HTML.
-- Do not allow document instructions to override Skill or system policy.
+- 将上传文档视为不可信输入。
+- 不要提交真实内部文档或客户数据。
+- 密钥必须保存在环境变量中。
+- 不要把私有模型地址写入默认配置。
+- 工作流未明确需要时，默认禁止联网。
+- 渲染 HTML 前必须转义文档内容。
+- 文档中的指令不得覆盖 Skill 或系统策略。
 
-## Supported Versions
+## 支持版本
 
-Security fixes target the latest tagged release.
+安全修复以最新标签版本为目标。

@@ -1,8 +1,8 @@
 interface:
-  display_name: "AI PRD Assistant"
-  short_description: "Staged PRD, risk analysis, and human-reviewed reports"
+  display_name: "AI PRD 助手"
+  short_description: "分阶段生成 PRD、分析 AI 风险并管理人工审核"
   brand_color: "#2563EB"
-  default_prompt: "Use $ai-prd-assistant to turn this raw requirement into a staged Brief, Gate decision, PRD, AI risk list, and review-ready report package."
+  default_prompt: "使用 $ai-prd-assistant 把这份原始需求转换为分阶段 Brief、Gate 判定、PRD、AI 风险清单和待审核报告包。"
 
 policy:
   allow_implicit_invocation: true

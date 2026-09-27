@@ -1,6 +1,6 @@
-# Serial Workflow and Review Gate
+# 串行工作流与审核门禁
 
-## Production Stages
+## 生产阶段
 
 ```text
 输入归一化
@@ -11,45 +11,40 @@
 → 报告组装
 ```
 
-The first four stages produce artifacts. Human review is a control gate, not a
-sixth pipeline status.
+前四个阶段负责生成产物。人工审核是控制门禁，不是第六个流水线状态。
 
-## Gate Conclusions
+## Gate 结论
 
 ### BLOCKED
 
-Use when a critical gap or hard conflict prevents a responsible PRD draft.
-Output clarification questions only and terminate.
+当关键缺口或硬冲突导致无法负责任地生成 PRD 草案时使用。只输出澄清问题并终止。
 
 ### DRAFT_WITH_GAPS
 
-Use when the core scope is understandable but material decisions remain.
-Continue while referencing every unresolved item as `[待确认:Gxx]`.
+当核心范围可以理解，但仍存在重要未决事项时使用。继续执行，并将未决项标记为 `[待确认:Gxx]`。
 
 ### READY
 
-Use when the Brief is structurally sufficient and no material conflict remains.
-This does not guarantee that assumptions are correct.
+当 Brief 在结构上足够完整且没有重要冲突时使用。这不代表其中的假设一定正确。
 
 ### HARNESS_FAILED
 
-Use when structural validation fails. Write the failure log and stop. Do not
-retry, repair silently, or continue.
+当结构校验失败时使用。写入失败日志并终止，不得重试、静默修复或继续执行。
 
-## Artifact Ownership
+## 产物归属
 
-Each stage owns one artifact type:
+每个阶段只负责一类产物：
 
-- Stage 1 owns the Brief.
-- Stage 2 owns validation and Gate output.
-- Stage 3 owns the PRD.
-- Stage 4 owns the AI risk list.
-- Human review owns the review decision.
-- Report assembly owns Markdown and HTML.
+- 第 1 阶段负责 Brief。
+- 第 2 阶段负责需求校验和 Gate 结论。
+- 第 3 阶段负责 PRD。
+- 第 4 阶段负责 AI 风险清单。
+- 人工审核负责审核决策。
+- 报告组装负责 Markdown 和 HTML。
 
-Downstream stages read artifacts instead of replaying the full conversation.
+下游阶段读取产物文件，而不是重新读取完整对话。
 
-## Review State
+## 审核状态
 
 ```text
 pending
@@ -58,13 +53,12 @@ rejected
 revision
 ```
 
-Transitions:
+状态流转：
 
 ```text
 pending → approved
-pending → revision → rebuild affected artifacts → pending
-pending → rejected → stop
+pending → revision → 重建受影响产物 → pending
+pending → rejected → 终止
 ```
 
-Only `approved` permits report assembly. Gate status remains unchanged during
-review.
+只有 `approved` 允许进入报告组装。审核过程中 Gate 状态保持不变。
